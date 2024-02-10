@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,10 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a >= b && a >= c) return a;
+  if (b >= a && b >= c) return b;
+  return c;
 }
 
 /**
@@ -82,8 +84,10 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a + b < c || a + c < b || c + b < a) return false;
+  if (a === 0 || b === 0 || c === 0) return false;
+  return a === b || a === c || b === c;
 }
 
 /**
@@ -100,8 +104,28 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let result = '';
+  let newNum = num;
+  while (newNum > 0) {
+    if (newNum >= 10) {
+      newNum -= 10;
+      result += 'X';
+    } else if (newNum === 9) {
+      newNum -= 9;
+      result += 'IX';
+    } else if (newNum >= 5) {
+      newNum -= 5;
+      result += 'V';
+    } else if (newNum === 4) {
+      newNum -= 4;
+      result += 'IV';
+    } else if (newNum >= 1) {
+      newNum -= 1;
+      result += 'I';
+    }
+  }
+  return result;
 }
 
 /**
@@ -119,8 +143,47 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const numbers = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  const splited = numberStr.toString(); // Convert the number to a string
+  let result = '';
+  for (let i = 0; i < splited.length; i += 1) {
+    switch (splited[i]) {
+      case '.':
+        splited[i] = 'point';
+        result += ' ';
+        result += splited[i];
+        break;
+      case ',':
+        splited[i] = 'point';
+        result += ' ';
+        result += splited[i];
+        break;
+      case '-':
+        splited[i] = 'minus';
+        result += splited[i];
+        break;
+      default:
+        splited[i] = numbers[Number(splited[i])];
+        if (result < 4) result += splited[i];
+        else {
+          result += ' ';
+          result += splited[i];
+        }
+    }
+  }
+  return result;
 }
 
 /**
